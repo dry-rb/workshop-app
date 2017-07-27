@@ -1,0 +1,24 @@
+#!/usr/bin/env ruby
+require "fileutils"
+
+APP_ROOT = File.expand_path("../../", __FILE__)
+
+Dir.chdir(APP_ROOT) do
+  puts "== Bundling"
+  system "bundle install"
+  puts "\n"
+
+  puts "== Installing .env files"
+  FileUtils.cp ".env-example", ".env" unless File.exist?(".env")
+  FileUtils.cp ".env.text-example", ".env.test" unless File.exist?(".env.test")
+
+  puts "== Creating databases"
+  system "bundle exec rake db:create"
+  system "RACK_ENV=test bundle exec rake db:create"
+
+  if Dir["db/migrate/*.rb"].any?
+    puts "== Migrating databases"
+    system "bundle exec rake db:migrate"
+    system "RACK_ENV=test bundle exec rake db:migrate"
+  end
+end

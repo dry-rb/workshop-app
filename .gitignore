@@ -1,0 +1,12 @@
+# Ignore app settings (append "-example" to commit example files)
+/.env*
+!/.env*-example
+
+# RSpec
+/spec/examples.txt
+
+# Logs
+/log/*.log
+
+# Temp files
+tmp/*
