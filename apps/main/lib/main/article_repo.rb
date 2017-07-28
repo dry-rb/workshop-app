@@ -2,5 +2,8 @@ require "blog/repository"
 
 module Main
   class ArticleRepo < Blog::Repository[:articles]
+    def listing
+      articles.published.ordered_by_published_at
+    end
   end
 end
