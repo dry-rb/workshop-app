@@ -27,6 +27,7 @@ gem "dry-types"
 gem "dry-validation"
 gem "dry-view", ">= 0.3.0"
 gem "slim"
+gem "time_math2"
 
 group :development, :test do
   gem "pry-byebug", platform: :mri
