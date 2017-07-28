@@ -1,0 +1,68 @@
+#!/usr/bin/env ruby
+
+require "open3"
+
+system "git branch -D integration-tests", out: File::NULL, err: File::NULL
+system "git checkout -q -b integration-tests", out: File::NULL
+
+def test_branch(name, expect_success:)
+  puts "#{name}..."
+
+  branch_cmd = "git merge --no-edit -s recursive -X theirs #{name}"
+
+  output, status = Open3.capture2e(branch_cmd)
+  unless status.success?
+    puts "Failed merging #{name}\n\n"
+    puts "#{branch_cmd}\n\n"
+    puts output
+    exit 1
+  end
+
+  bundle_cmd = "bundle install"
+  output, status = Open3.capture2e(bundle_cmd)
+  unless status.success?
+    puts bundle_cmd
+    puts output
+    exit 1
+  end
+
+  yield if block_given?
+
+  test_cmd = "bundle exec rake spec"
+
+  output, status = Open3.capture2e(test_cmd)
+  unless status.success? == expect_success
+    if expect_success
+      puts "Expected #{name} tests to pass, but they failed\n\n"
+    else
+      puts "Expected #{name} tests to fail, but they passed\n\n"
+    end
+
+    puts "#{test_cmd}\n\n"
+
+    puts output
+    exit 1
+  end
+end
+
+test_branch "1-types-validation", expect_success: false
+test_branch "1-types-validation-completed", expect_success: true
+test_branch "2-functional-objects", expect_success: false
+test_branch "2-functional-objects-completed", expect_success: true
+test_branch "3-containers-systems", expect_success: true
+test_branch "4-persistence", expect_success: false do
+  migrate_cmd = "bundle exec rake db:migrate"
+  output, status = Open3.capture2e(migrate_cmd)
+  unless status.success?
+    puts migrate_cmd
+    puts output
+    exit 1
+  end
+end
+test_branch "4-persistence-completed", expect_success: true
+test_branch "5-routes-views", expect_success: false
+test_branch "5-routes-views-completed", expect_success: true
+
+system "git checkout -q - && git branch -D integration-tests", out: File::NULL
+
+puts "All OK!"

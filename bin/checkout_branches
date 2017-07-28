@@ -1,0 +1,15 @@
+#!/usr/bin/env ruby
+
+system "git fetch origin"
+
+remote_branches = `git branch --remote --list`
+remote_branches.split("\n").map(&:strip).reject { |name| name =~ /\/master$/ }.each do |remote_branch|
+  _remote_name, branch_name = remote_branch.match(/^(\w+)\/(.+)$/).to_a[1..-1]
+  local_branch = `git branch --list #{branch_name}`
+
+  if !local_branch.include?(branch_name)
+    puts "Checking out #{remote_branch}..."
+    system "git checkout -q --track #{remote_branch}"
+    system "git checkout -q master"
+  end
+end

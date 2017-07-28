@@ -1,0 +1,19 @@
+language: ruby
+cache: bundler
+before_script:
+  - bin/prepare_ci_repo
+  - cp .env-travis .env
+  - createdb dry_rb_workshop_blog_test
+script:
+  - bin/checkout_branches
+  - bin/test_integration
+rvm:
+  - 2.4.1
+notifications:
+  email: false
+  webhooks:
+    urls:
+      - https://webhooks.gitter.im/e/19098b4253a72c9796db
+    on_success: change  # options: [always|never|change] default: always
+    on_failure: always  # options: [always|never|change] default: always
+    on_start: false     # default: false
