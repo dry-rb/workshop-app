@@ -1,7 +1,6 @@
 require_relative "db_spec_helper"
 
 require "rack/test"
-require "capybara/rspec"
 require "capybara-screenshot/rspec"
 require "capybara/poltergeist"
 
