@@ -1,5 +1,5 @@
 Blog::Container.namespace "persistence" do |container|
-  container.finalize :rom do
+  container.finalize :persistence do
     init do
       require "sequel"
       require "rom"

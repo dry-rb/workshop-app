@@ -35,7 +35,7 @@ end
 
 namespace :db do
   task :setup do
-    Blog::Container.boot :rom
+    Blog::Container.boot :persistence
   end
 
   task :settings do
