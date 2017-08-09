@@ -14,7 +14,7 @@ Dir.chdir(APP_ROOT) do
 
   puts "== Installing .env files"
   FileUtils.cp ".env-example", ".env" unless File.exist?(".env")
-  FileUtils.cp ".env.text-example", ".env.test" unless File.exist?(".env.test")
+  FileUtils.cp ".env.test-example", ".env.test" unless File.exist?(".env.test")
   puts
 
   puts "== Creating databases"
