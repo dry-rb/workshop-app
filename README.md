@@ -139,7 +139,7 @@ $ git merge --no-edit -s recursive -X theirs 3-containers-systems
 - [ ] Inspect the `Admin::Container` container
   - [ ] Inspect its `.keys`
   - [ ] Resolve an `articles.create` object from the container
-  - [ ] Update it to auto-inject an "articles_repo" dependency
+  - [ ] Update it to auto-inject an "article_repo" dependency
   - [ ] Call the object with valid/invalid attributes
 - [ ] Inspect the behavior of a non-finalized container
   - [ ] Comment out the code that finalizes the container
@@ -178,7 +178,7 @@ $ bundle exec rspec
 There should be failures for examples in this file:
 
 ```
-./spec/admin/unit/persistence/articles_repo_spec.rb
+./spec/admin/unit/article_repo_spec.rb
 ```
 
 ### Getting acquainted
@@ -189,7 +189,7 @@ Inspect the basic setup:
 - [ ] Migrations in `db/migrate`
 - [ ] Relations in `lib/persistence/relations`
 - [ ] Test factories in `spec/factories`
-- [ ] Articles repo at `apps/admin/lib/admin/persistence/articles_repo.rb`
+- [ ] Article repo at `apps/admin/lib/admin/article_repo.rb`
 
 ### Reading data
 
@@ -236,9 +236,9 @@ There should be failures for examples in this file:
 
 - [ ] Set up the `Main::Views::Home` view controller:
   - [ ] Configure it to render using a template named `home`
-  - [ ] Inject a `persistence.articles_repo` dependency
-  - [ ] Add an `articles` exposure returning `articles_repo.listing`
-- [ ] Add the `#listing` method to `Main::Persistence::ArticlesRepo` (return published articles only, ordered by `published_at` descending)
+  - [ ] Inject an `article_repo` dependency
+  - [ ] Add an `articles` exposure returning `article_repo.listing`
+- [ ] Add the `#listing` method to `Main::ArticleRepo` (return published articles only, ordered by `published_at` descending)
 - [ ] Fill in `web/templates/home.html.slim` template so it displays each article
 - [ ] Test your work by running the app and viewing it in the browser
 
