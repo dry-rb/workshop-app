@@ -18,6 +18,10 @@ module Admin
 
     route do |r|
       r.multi_route
+
+      r.root do
+        r.redirect "/admin/articles"
+      end
     end
 
     load_routes!

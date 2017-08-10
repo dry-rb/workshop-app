@@ -8,6 +8,10 @@ module Blog
     end
 
     route do |r|
+      r.on "admin" do
+        r.run ::Admin::Application.freeze.app
+      end
+
       r.run ::Main::Application.freeze.app
     end
 

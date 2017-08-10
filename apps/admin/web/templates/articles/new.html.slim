@@ -1,0 +1,6 @@
+h1 New article
+
+form action="/admin/articles" method="POST"
+  == csrf_tag
+  == render :form, article: nil, authors: authors, validation: validation
+  button Create article

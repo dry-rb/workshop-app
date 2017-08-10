@@ -1,0 +1,9 @@
+h1 Articles
+
+p
+  a href="/admin/articles/new" New article
+
+- articles.each do |article|
+  .article
+    h2
+      a href="/admin/articles/#{article.id}/edit" = article.title

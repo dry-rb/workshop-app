@@ -1,0 +1,18 @@
+p
+  | Title
+  br
+  input type="text" name="article[title]" value=(validation[:title] || article&.title)
+p
+  | Author
+  select name="article[author_id]"
+    - authors.each do |author|
+      option value=author.id selected=((validation[:author_id] || article&.author_id) == author.id) = author.name
+p
+  | Status
+  select name="article[status]"
+    option value="draft" selected=((validation[:status] || article&.status) == "draft") Draft
+    option value="published" selected=((validation[:status] || article&.status) == "published") Published
+p
+  | Published at
+  br
+  input type="text" name="article[published_at]" value=(validation[:published_at] || article&.published_at)

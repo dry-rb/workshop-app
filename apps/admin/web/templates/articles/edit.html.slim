@@ -1,0 +1,6 @@
+h1 Editing &lsquo;#{article.title}&rsquo;
+
+form action="/admin/articles/#{article.id}" method="POST"
+  == csrf_tag
+  == render :form, article: article, authors: authors, validation: validation
+  button Update article
