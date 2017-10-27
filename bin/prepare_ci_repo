@@ -1,0 +1,7 @@
+#!/usr/bin/env ruby
+
+build_head = `git rev-parse HEAD`
+
+system "git config --replace-all remote.origin.fetch +refs/heads/*:refs/remotes/origin/*"
+system "git fetch"
+system "git checkout #{build_head}"

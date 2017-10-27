@@ -1,5 +1,6 @@
 # Ignore app settings (copy to .example.env.* to check in example files)
 /.env*
+!/.env*-*
 
 # RSpec
 /spec/examples.txt
