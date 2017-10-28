@@ -10,6 +10,10 @@ module Blog
     plugin :error_handler
 
     route do |r|
+      r.on "admin" do
+        r.run Blog::Admin::Web.freeze.app
+      end
+
       r.run Blog::Main::Web.freeze.app
     end
 
