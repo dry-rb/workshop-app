@@ -1,10 +1,8 @@
+require "blog/repository"
+
 module Blog
   module Admin
-    class ArticleRepo
-      def create(attrs)
-        puts "Creating article from #{attrs.inspect}"
-        attrs
-      end
+    class ArticleRepo < Blog::Repository[:articles]
     end
   end
 end
