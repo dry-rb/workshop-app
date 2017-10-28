@@ -1,3 +1,13 @@
+GIT
+  remote: https://github.com/dry-rb/dry-view
+  revision: a5433cee677aee284d302a87a0daa49510193754
+  specs:
+    dry-view (0.3.0)
+      dry-configurable (~> 0.1)
+      dry-core (~> 0.2)
+      dry-equalizer (~> 0.2)
+      tilt (~> 2.0)
+
 GEM
   remote: https://rubygems.org/
   specs:

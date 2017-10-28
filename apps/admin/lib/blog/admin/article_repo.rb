@@ -6,7 +6,7 @@ module Blog
     class ArticleRepo < Blog::Repository[:articles]
       struct_namespace Entities
 
-      commands :create
+      commands :create, update: :by_pk
 
       def listing
         articles.ordered_by_created_at
@@ -14,6 +14,10 @@ module Blog
 
       def by_id(id)
         articles.by_pk(id).one
+      end
+
+      def author_options
+        authors
       end
 
       private

@@ -20,8 +20,7 @@ module Blog
       plugin :multi_route
 
       route do |r|
-        # Enable this after writing your first web/routes/ file
-        # r.multi_route
+        r.multi_route
 
         r.root do
           r.view "home"

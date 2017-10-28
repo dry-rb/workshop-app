@@ -1,0 +1,30 @@
+== csrf_tag
+
+.input
+  | Title
+  br
+  input name="article[title]" type="text" value=form.value(:title)
+  == render :messages, messages: form.messages(:title)
+
+.input
+  | Author
+  select name="article[author_id]"
+    option
+    - author_options.each do |author|
+      option value=author.id selected=(author.id == form.value(:author_id))
+        = author.name
+  == render :messages, messages: form.messages(:author_id)
+
+.input
+  | Status
+  select name="article[status]"
+    option
+    - status_options.each do |status|
+      option value=status selected=(status.to_s == form.value(:status))
+        = status
+  == render :messages, messages: form.messages(:status)
+
+.input
+  | Published at
+  br
+  input name="article[published_at]" type="text" value=form.value(:published_at)
