@@ -8,6 +8,12 @@ module Blog
         configure do |config|
           config.template = "home"
         end
+
+        include Import["article_repo"]
+
+        expose :articles do
+          article_repo.listing
+        end
       end
     end
   end

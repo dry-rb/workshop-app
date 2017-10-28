@@ -7,6 +7,10 @@ module Persistence
         end
       end
 
+      def published
+        where(status: "published")
+      end
+
       def ordered_by_created_at
         order(self[:created_at].desc)
       end
