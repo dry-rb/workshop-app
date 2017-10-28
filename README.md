@@ -97,69 +97,68 @@ After completing these exercises, re-run the specs and ensure they're all passin
 - [ ] Write a schema for nested data
 - [ ] Write a high-level validation block
 
-## ✏️ Functional objects
+If you need to catch up, merge the completed work:
+
+```sh
+$ git merge --no-edit -s recursive -X theirs 1-types-validation-completed
+```
+
+## ✏️ Functional objects & systems
 
 Merge the starter code and run the specs:
 
 ```sh
-$ git merge --no-edit -s recursive -X theirs 2-functional-objects
+$ git merge --no-edit -s recursive -X theirs 2-functional-objects-and-systems
 $ bundle exec rspec
 ```
 
 There should be failures for examples in this file:
 
 ```
-./spec/integration/functional_object_example_spec.rb
+./spec/admin/unit/articles/create_spec.rb
 ```
 
-Open up this file and take a look at it. It contains implementation code at the top with RSpec examples below. This will be a self-contained "playground" for thinking about and working with functional objects.
+### Building a functional object
 
-Imagine we're building a feature for a blog that imports articles from a 3rd-party feed. Your exercise:
+- [ ] Create a functional operation class for creating an article, in `apps/admin/lib/blog/admin/articles/create.rb`
+- [ ] Define a `#call` method accepting article params
+- [ ] Use the `FormSchema` we already created to validate these params
+- [ ] Create a dummy article repository class (with a `#create` method) at `apps/admin/lib/blog/admin/article_repo.rb`
+- [ ] Inject the article_repo into the `Articles::Create` functional object
+- [ ] When article params are valid, create an article using the repo and return it wrapped in a `Right`
+- [ ] When article params are invalid, return the validation result wrapped in a `Left`
 
-- [ ] Consider how this might be broken apart into multiple functional objects
-- [ ] Write code for the `ImportArticles` class that uses these other objects to do its work and populate the `DB` with articles (these can be example data that you hard-code into your classes).
+### Inspecting the system
+
+- Inspect the `Blog::Admin::Container` system container
+  - [ ] Open the console and inspect its `.keys`
+  - [ ] Resolve an `articles.create` object from the container
+  - [ ] Call the object with valid/invalid attributes to inspect its output
+- Inspect the behavior of a non-finalized container
+  - [ ] Comment out the code that finalizes the container (in `apps/admin/system/boot.rb`)
+  - [ ] Open the console and inspect the container's `.keys`
+  - [ ] Count the number of loaded Ruby source files (via `$LOADED_FEATURES.grep(/workshop-app/).count`)
+  - [ ] Initialize an `Admin::Articles::Create` object directly
+  - [ ] Inspect the container's `.keys` again
+  - [ ] Count the number of loaded Ruby source files again (via `$LOADED_FEATURES.grep(/workshop-app/).count`)
 
 ### In practice
 
 - [ ] Think of how something you've written before could be modelled as functional objects
 - [ ] Think of something you've written that would have been better broken up into smaller units of responsibility
 
-### Further exploration
-
-- [ ] For the functional objects you arranged above, write unit tests for each one
-
-## ️✏️ Containers & systems
-
-Merge the starter code:
+If you need to catch up, merge the completed work:
 
 ```sh
-$ git merge --no-edit -s recursive -X theirs 3-containers-systems
+$ git merge --no-edit -s recursive -X theirs 2-functional-objects-and-systems-completed
 ```
-
-- [ ] Inspect the `Admin::Container` container
-  - [ ] Inspect its `.keys`
-  - [ ] Resolve an `articles.create` object from the container
-  - [ ] Update it to auto-inject an "articles_repo" dependency
-  - [ ] Call the object with valid/invalid attributes
-- [ ] Inspect the behavior of a non-finalized container
-  - [ ] Comment out the code that finalizes the container
-  - [ ] Inspect the container's `.keys`
-  - [ ] Initialize an `Admin::Articles::Create` object directly
-  - [ ] Inspect the container's `.keys` again
-
-### Further exploration
-
-- [ ] Take your functional objects from the previous exercise and make them work with auto-injection within this app
-- [ ] Update the tests to match
-- [ ] Use dry-transaction to combine the `ImportArticles` operation with another operation to deliver an email notification once the import completes
-- [ ] Add a bootable component (in `system/boot`) to configure the email notifier with recipient email addresses
 
 ## ️✏️ Persistence with rom-rb
 
 Merge the starter code:
 
 ```sh
-$ git merge --no-edit -s recursive -X theirs 4-persistence
+$ git merge --no-edit -s recursive -X theirs 3-persistence
 ```
 
 Migrate the database:
@@ -178,7 +177,7 @@ $ bundle exec rspec
 There should be failures for examples in this file:
 
 ```
-./spec/admin/unit/persistence/articles_repo_spec.rb
+./spec/admin/unit/article_repo_spec.rb
 ```
 
 ### Getting acquainted
@@ -219,12 +218,18 @@ Inspect the basic setup:
 - [ ] Investigate using dry-struct to build custom struct classes with strict attribute types
 - [ ] Build and use a custom changeset to transform data before writing
 
+If you need to catch up, merge the completed work:
+
+```sh
+$ git merge --no-edit -s recursive -X theirs 3-persistence-completed
+```
+
 ## ️✏️ Views & routes
 
 Merge the starter code and run the specs:
 
 ```sh
-$ git merge --no-edit -s recursive -X theirs 5-routes-views
+$ git merge --no-edit -s recursive -X theirs 4-routes-views
 $ bundle exec rspec
 ```
 
@@ -234,13 +239,18 @@ There should be failures for examples in this file:
 ./spec/main/unit/views/home_spec.rb
 ```
 
-- [ ] Set up the `Main::Views::Home` view controller:
-  - [ ] Configure it to render using a template named `home`
-  - [ ] Inject a `persistence.articles_repo` dependency
+- [ ] Set up the `Blog::Main::Views::Home` view controller:
+  - [ ] Inject an `article_repo` dependency
   - [ ] Add an `articles` exposure returning `articles_repo.listing`
-- [ ] Add the `#listing` method to `Main::Persistence::ArticlesRepo` (return published articles only, ordered by `published_at` descending)
+- [ ] Add the `#listing` method to `Blog::Main::ArticleRepo` (return published articles only, ordered by `published_at` descending)
 - [ ] Fill in `web/templates/home.html.slim` template so it displays each article
 - [ ] Test your work by running the app and viewing it in the browser
+
+If you need to catch up, merge the completed work:
+
+```sh
+$ git merge --no-edit -s recursive -X theirs 4-routes-views-completed
+```
 
 ## ️✏️ Next steps
 
