@@ -47,10 +47,9 @@ end
 
 test_branch "1-types-validation", expect_success: false
 test_branch "1-types-validation-completed", expect_success: true
-test_branch "2-functional-objects", expect_success: false
-test_branch "2-functional-objects-completed", expect_success: true
-test_branch "3-containers-systems", expect_success: true
-test_branch "4-persistence", expect_success: false do
+test_branch "2-functional-objects-and-systems", expect_success: false
+test_branch "2-functional-objects-and-systems-completed", expect_success: true
+test_branch "3-persistence", expect_success: false do
   migrate_cmd = "bundle exec rake db:migrate"
   output, status = Open3.capture2e(migrate_cmd)
   unless status.success?
@@ -59,10 +58,9 @@ test_branch "4-persistence", expect_success: false do
     exit 1
   end
 end
-test_branch "4-persistence-completed", expect_success: true
-test_branch "5-routes-views", expect_success: false
-test_branch "5-routes-views-completed", expect_success: true
-
+test_branch "3-persistence-completed", expect_success: true
+test_branch "4-routes-views", expect_success: false
+test_branch "4-routes-views-completed", expect_success: true
 system "git checkout -q - && git branch -D integration-tests", out: File::NULL
 
 puts "All OK!"
